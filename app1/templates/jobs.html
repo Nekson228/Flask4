@@ -4,27 +4,36 @@
 {% block content %}
 <h3>Чем можно занятся на борту:</h3>
 {% for job in jobs %}
-<h5>Action #{{ loop.index }}</h5>
-<table class="table">
-  <thead>
-    <tr class="table-active">
-      <th>Title of activity</th>
-      <th>Team leader</th>
-      <th>Duration</th>
-      <th>List of collaborators</th>
-      <th>Is finished</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="table-info">
-      <td>{{ job.job }}</td>
-      <td>{{ team_leaders[loop.index - 1] }}</td>
-      <td>{{ job.work_size }}</td>
-      <td>{{ job.collaborators }}</td>
-      <td>{{ job.is_finished }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="jobs_list">
+  <h5>Action #{{ loop.index }}</h5>
+  <table class="table">
+    <thead>
+      <tr class="table-active">
+        <th>Title of activity</th>
+        <th>Team leader</th>
+        <th>Duration</th>
+        <th>List of collaborators</th>
+        <th>Is finished</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="table-info">
+        <td>{{ job.job }}</td>
+        <td>{{ team_leaders[loop.index - 1] }}</td>
+        <td>{{ job.work_size }}</td>
+        <td>{{ job.collaborators }}</td>
+        <td>{{ job.is_finished }}</td>
+      </tr>
+    </tbody>
+  </table>
+  {% if current_user.is_authenticated and (current_user.id == job.team_leader or current_user.id == 1)  %}
+      <div>
+          <a href="/edit_job/{{ job.id }}" class="btn btn-warning">Изменить</a>
+          <a href="/delete_job/{{ job.id }}" class="btn btn-danger">Удалить</a>
+      </div>
+  {% endif %}
+  <br>
+</div>
 {% endfor %}
 <a class="btn btn-success" href="/add_job">Добавить работу</a>
 {% endblock %}
