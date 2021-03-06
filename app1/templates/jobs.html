@@ -2,6 +2,7 @@
 
 
 {% block content %}
+<h3>Чем можно занятся на борту:</h3>
 {% for job in jobs %}
 <h5>Action #{{ loop.index }}</h5>
 <table class="table">
@@ -17,7 +18,7 @@
   <tbody>
     <tr class="table-info">
       <td>{{ job.job }}</td>
-      <td>{{ job.team_leader }}</td>
+      <td>{{ team_leaders[loop.index - 1] }}</td>
       <td>{{ job.work_size }}</td>
       <td>{{ job.collaborators }}</td>
       <td>{{ job.is_finished }}</td>
@@ -25,4 +26,5 @@
   </tbody>
 </table>
 {% endfor %}
+<a class="btn btn-success" href="/add_job">Добавить работу</a>
 {% endblock %}
